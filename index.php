@@ -10,20 +10,22 @@ $employee = new Employee();
 echo "<pre>";
 var_dump($employee->getEmployee());
 
-# echo "Pesquisar pelo nome";
-# echo "<pre>";
-# var_dump($employee->getByName("Evaristo Pascoal"));
+// echo "Pesquisar pelo nome";
+// echo "<pre>";
+// var_dump($employee->getByName("Jidlaf Tiago"));
 
 $handlerResult = $employee->save(
-    "Jidlaf Tiago",
-    "jidlaftiago2@gmail.com",
-    "Analista de sistemas"
+    "Kiala Daniel",
+    "kialadaniel@gmail.com",
+    "Programador"
 );
 
 if ($handlerResult->status <> 200) {
     echo <<<TEXT
     [ERROR]: $handlerResult->message 
     TEXT;
+
+    die;
 }
 
 echo $handlerResult->message;
