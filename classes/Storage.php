@@ -6,24 +6,24 @@ abstract class Storage
 
     public function __construct(string $mode)
     {
-        $fopen = fopen(
-            getStoragePath("employee.csv"),
-            $mode
-        );
+        $this->mapDataIntoStorage();
 
-        $this->mapDataIntoStorage($fopen);
-
-        fclose($fopen);
-
-        // Remove a primeira posição do array (array_shift)
+        // Remove the first position in array (array_shift)
         # array_shift($this->storage);
     }
 
-    private function mapDataIntoStorage($fopen)
+    #[FileOpen()]
+    private function mapDataIntoStorage()
     {
-        fgetcsv($fopen);
+        $attributes = ReflectionAbsctract::getArgs(
+            scoped: self::class,
+            attr: FileOpen::class,
+            method: "mapDataIntoStorage"
+        );
 
-        while (($data = fgetcsv($fopen)) !== false) {
+        fgetcsv($attributes->fopen);
+
+        while (($data = fgetcsv($attributes->fopen)) !== false) {
             array_push(
                 $this->storage,
                 $this->organiseData($data)
@@ -43,22 +43,20 @@ abstract class Storage
         ];
     }
 
+    #[FileOpen(mode: "a+")]
     public function create(array $payload)
     {
-        $fopen = fopen(
-            getStoragePath("employee.csv"),
-            "a+"
+        $attributes = ReflectionAbsctract::getArgs(
+            scoped: self::class,
+            attr: FileOpen::class,
+            method: "create"
         );
 
-        if (fputcsv($fopen, $payload) !== false) {
-
-            fclose($fopen);
+        if (fputcsv($attributes->fopen, $payload) !== false) {
 
             return true;
         }
-
-        fclose($fopen);
-
+        
         return false;
     }
 }
