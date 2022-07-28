@@ -10,7 +10,7 @@ $employee = new Employee();
 echo "<pre>";
 var_dump($employee->getEmployee());
 
-// echo "Pesquisar pelo nome";
+// echo "Search by name";
 // echo "<pre>";
 // var_dump($employee->getByName("Jidlaf Tiago"));
 

@@ -2,9 +2,9 @@
 
 class Employee extends Storage
 {
-    public function __construct(string $mode = "r")
+    public function __construct()
     {
-        parent::__construct($mode);
+        parent::__construct();
     }
 
     public function getEmployee()
@@ -31,11 +31,11 @@ class Employee extends Storage
     public function save(string $name, string $email, string $cargo)
     {
         if (empty($name) || empty($email) || empty($cargo)) {
-            return response(400, "Por favor preencha devicamente os campos!");
+            return response(400, "Please, check the fields if is correct");
         }
 
         if ($this->checkIfUserAlreadyExists($email)) {
-            return response(401, "O usuário informádo já existe");
+            return response(401, "The user already exists");
         }
 
         $newId = generateId($this->getEmployee());
@@ -45,9 +45,9 @@ class Employee extends Storage
         $result = $this->create($payload);
 
         if ($result) {
-            return response(200, "Usuário criado com sucesso");
+            return response(200, "User successfully created");
         }
 
-        return response(500, "Algo deu errado, por favor tente novamente!");
+        return response(500, "An error occurred, please try again");
     }
 }

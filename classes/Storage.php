@@ -4,7 +4,7 @@ abstract class Storage
 {
     protected array $storage = [];
 
-    public function __construct(string $mode)
+    public function __construct()
     {
         $this->mapDataIntoStorage();
 
